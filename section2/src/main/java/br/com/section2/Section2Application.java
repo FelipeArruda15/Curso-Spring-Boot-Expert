@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class Section2Application {
 
-	@Autowired
-	@Qualifier("applicationName")
+	@Value("${application.name}")
 	private String applicationName;
 
 	@GetMapping("/hello")
