@@ -3,8 +3,7 @@ package br.com.section2;
 import org.springframework.boot.*;
 import org.springframework.context.annotation.*;
 
-@Configuration
-@Profile("development")
+@Development
 public class MinhaConfiguration {
 
     @Bean
