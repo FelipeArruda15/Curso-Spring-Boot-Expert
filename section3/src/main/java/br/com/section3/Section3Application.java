@@ -16,10 +16,32 @@ public class Section3Application {
 	@Bean
 	public CommandLineRunner init(@Autowired Clientes clientes){
 		return args -> {
+			System.out.println("Salvando Clientes:");
 			clientes.salvar(new Cliente("Felipe"));
 			clientes.salvar(new Cliente("Daniela"));
+
 			List<Cliente> todosClientes = clientes.obterTodos();
 			todosClientes.forEach(System.out::println);
+
+			System.out.println("Atualizando Clientes:");
+			todosClientes.forEach(c ->{
+				c.setNome(c.getNome() + " Atualizado.");
+				clientes.alterar(c);
+			});
+
+			todosClientes = clientes.obterTodos();
+			todosClientes.forEach(System.out::println);
+
+			System.out.println("Obtendo Clientes por nome:");
+			clientes.buscarPorNome("Fel").forEach(System.out::println);
+
+			System.out.println("Deletando Clientes");
+			todosClientes.forEach(c ->{
+				clientes.deletar(c.getId());
+			});
+
+			todosClientes = clientes.obterTodos();
+			System.out.println(todosClientes.size());
 		};
 	}
 
