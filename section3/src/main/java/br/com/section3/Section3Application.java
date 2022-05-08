@@ -23,7 +23,7 @@ public class Section3Application {
 			List<Cliente> todosClientes = clientes.obterTodos();
 			todosClientes.forEach(System.out::println);
 
-			System.out.println("Atualizando Clientes:");
+/*			System.out.println("Atualizando Clientes:");
 			todosClientes.forEach(c ->{
 				c.setNome(c.getNome() + " Atualizado.");
 				clientes.alterar(c);
@@ -42,7 +42,9 @@ public class Section3Application {
 
 			todosClientes = clientes.obterTodos();
 			System.out.println(todosClientes.size());
+			 */
 		};
+
 	}
 
 	public static void main(String[] args) {
