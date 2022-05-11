@@ -17,30 +17,30 @@ public class Section3Application {
     public CommandLineRunner init(@Autowired Clientes clientes) {
         return args -> {
             System.out.println("Salvando Clientes:");
-            clientes.salvar(new Cliente("Felipe"));
-            clientes.salvar(new Cliente("Daniela"));
+            clientes.save(new Cliente("Felipe"));
+            clientes.save(new Cliente("Daniela"));
 
-            List<Cliente> todosClientes = clientes.obterTodos();
+            List<Cliente> todosClientes = clientes.findAll();
             todosClientes.forEach(System.out::println);
 
             System.out.println("Atualizando Clientes:");
             todosClientes.forEach(c -> {
                 c.setNome(c.getNome() + " Atualizado.");
-                clientes.alterar(c);
+                clientes.save(c);
             });
 
-            todosClientes = clientes.obterTodos();
+            todosClientes = clientes.findAll();
             todosClientes.forEach(System.out::println);
 
             System.out.println("Obtendo Clientes por nome:");
-            clientes.buscarPorNome("Fel").forEach(System.out::println);
+            clientes.findByNomeLike("Fel").forEach(System.out::println);
 
             System.out.println("Deletando Clientes");
             todosClientes.forEach(c -> {
-                clientes.deletar(c.getId());
+                clientes.deleteById(c.getId());
             });
 
-            todosClientes = clientes.obterTodos();
+            todosClientes = clientes.findAll();
             System.out.println(todosClientes.size());
         };
 
