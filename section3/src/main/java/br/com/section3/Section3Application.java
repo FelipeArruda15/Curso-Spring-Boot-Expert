@@ -20,28 +20,8 @@ public class Section3Application {
             clientes.save(new Cliente("Felipe"));
             clientes.save(new Cliente("Daniela"));
 
-            List<Cliente> todosClientes = clientes.findAll();
-            todosClientes.forEach(System.out::println);
-
-            System.out.println("Atualizando Clientes:");
-            todosClientes.forEach(c -> {
-                c.setNome(c.getNome() + " Atualizado.");
-                clientes.save(c);
-            });
-
-            todosClientes = clientes.findAll();
-            todosClientes.forEach(System.out::println);
-
-            System.out.println("Obtendo Clientes por nome:");
-            clientes.findByNomeLike("Fel").forEach(System.out::println);
-
-            System.out.println("Deletando Clientes");
-            todosClientes.forEach(c -> {
-                clientes.deleteById(c.getId());
-            });
-
-            todosClientes = clientes.findAll();
-            System.out.println(todosClientes.size());
+            boolean existe = clientes.existsByNome("Felipe");
+            System.out.println("Existe algum cliente com o nome Felipe? R=" + existe);
         };
 
     }
