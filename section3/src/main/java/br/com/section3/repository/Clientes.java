@@ -18,8 +18,9 @@ public interface Clientes extends JpaRepository<Cliente, Integer> {
     @Query(value = "SELECT c FROM Cliente c WHERE c.nome LIKE :nome")
     List<Cliente> encontrarPorNome(@Param("nome") String nome);
 
-    @Query("DELETE FROM Cliente c WHERE c.nome = :nome")
+    @Query(value = "DELETE FROM Cliente c WHERE c.nome = :nome", nativeQuery = true)
     @Modifying
+    @Transactional
     void deleteByNome(@Param("nome") String nome);
 
     boolean existsByNome(String nome);
