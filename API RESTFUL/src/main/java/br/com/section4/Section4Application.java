@@ -17,6 +17,14 @@ import java.util.List;
 @SpringBootApplication
 public class Section4Application {
 
+    @Bean
+    public  CommandLineRunner commandLineRunner(@Autowired Clientes clientes){
+       return args -> {
+           Cliente c = new Cliente(null, "Felipe");
+           clientes.save(c);
+       };
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(Section4Application.class, args);
     }
