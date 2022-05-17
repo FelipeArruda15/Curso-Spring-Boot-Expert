@@ -24,7 +24,7 @@ public class ProdutoController {
     public Produto getProdutoById(@PathVariable Integer id) {
         return produtos
                 .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Produto não encontrado"));
     }
 
     @PostMapping
@@ -41,7 +41,7 @@ public class ProdutoController {
                 .map(produto -> {
                     produtos.delete(produto);
                     return produto;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
+                }).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Produto não encontrado"));
     }
 
     @PutMapping("/{id}")
@@ -53,7 +53,7 @@ public class ProdutoController {
                     produto.setId(produtoExistente.getId());
                     produtos.save(produto);
                     return produtoExistente;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
+                }).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Produto não encontrado"));
     }
 
     @GetMapping
