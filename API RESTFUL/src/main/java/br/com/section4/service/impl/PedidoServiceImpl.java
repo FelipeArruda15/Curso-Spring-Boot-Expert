@@ -56,7 +56,7 @@ public class PedidoServiceImpl implements PedidoService {
 
     private List<ItemPedido> converterItems(Pedido pedido, List<ItemPedidoDTO> items) {
         if (items.isEmpty()) {
-            throw new RegraNegocioException("Não é possivel realizar um pedido sem items.")
+            throw new RegraNegocioException("Não é possivel realizar um pedido sem items.");
         }
 
         return items
