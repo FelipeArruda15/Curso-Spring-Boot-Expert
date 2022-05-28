@@ -4,6 +4,7 @@ import br.com.section4.domain.entity.Cliente;
 import br.com.section4.domain.entity.ItemPedido;
 import br.com.section4.domain.entity.Pedido;
 import br.com.section4.domain.entity.Produto;
+import br.com.section4.domain.enums.StatusPedido;
 import br.com.section4.exception.RegraNegocioException;
 import br.com.section4.repository.Clientes;
 import br.com.section4.repository.ItensPedido;
@@ -47,6 +48,7 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setTotal(dto.getTotal());
         pedido.setDataPedido(LocalDate.now());
         pedido.setCliente(cliente);
+        pedido.setStatus(StatusPedido.REALIZADO);
 
         List<ItemPedido> items = converterItems(pedido, dto.getItems());
         repository.save(pedido);

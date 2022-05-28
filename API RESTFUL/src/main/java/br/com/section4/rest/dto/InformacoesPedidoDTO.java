@@ -10,6 +10,9 @@ public class InformacoesPedidoDTO {
     private String nomeCliente;
     private BigDecimal total;
     private String dataPedido;
+
+    private String status;
+
     private List<InformacaoItemPedidoDTO> items;
 
     public InformacoesPedidoDTO() {
@@ -62,6 +65,14 @@ public class InformacoesPedidoDTO {
 
     public void setDataPedido(String dataPedido) {
         this.dataPedido = dataPedido;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public List<InformacaoItemPedidoDTO> getItems() {

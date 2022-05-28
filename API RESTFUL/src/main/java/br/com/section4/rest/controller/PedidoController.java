@@ -49,6 +49,7 @@ public class PedidoController {
         dto.setCpf(pedido.getCliente().getCpf());
         dto.setNomeCliente(pedido.getCliente().getNome());
         dto.setTotal(pedido.getTotal());
+        dto.setStatus(pedido.getStatus().name());
         dto.setItems(converterItems(pedido.getItens()));
         return dto;
     }
