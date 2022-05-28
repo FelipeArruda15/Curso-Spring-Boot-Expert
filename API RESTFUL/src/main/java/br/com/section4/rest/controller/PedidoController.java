@@ -2,6 +2,8 @@ package br.com.section4.rest.controller;
 
 import br.com.section4.domain.entity.ItemPedido;
 import br.com.section4.domain.entity.Pedido;
+import br.com.section4.domain.enums.StatusPedido;
+import br.com.section4.rest.dto.AtualizacaoStatusPedidoDTO;
 import br.com.section4.rest.dto.InformacaoItemPedidoDTO;
 import br.com.section4.rest.dto.InformacoesPedidoDTO;
 import br.com.section4.rest.dto.PedidoDTO;
@@ -40,6 +42,13 @@ public class PedidoController {
                 .map(pedido -> converter(pedido))
                 .orElseThrow(() ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado."));
+    }
+
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateStatus(@PathVariable Integer id, @RequestBody AtualizacaoStatusPedidoDTO dto) {
+        String novoStatus = dto.getNovoStatus();
+        service.atualizarPedido(id, StatusPedido.valueOf(novoStatus));
     }
 
     private InformacoesPedidoDTO converter(Pedido pedido) {

@@ -5,6 +5,7 @@ import br.com.section4.domain.entity.ItemPedido;
 import br.com.section4.domain.entity.Pedido;
 import br.com.section4.domain.entity.Produto;
 import br.com.section4.domain.enums.StatusPedido;
+import br.com.section4.exception.PedidoNaoEncontradoException;
 import br.com.section4.exception.RegraNegocioException;
 import br.com.section4.repository.Clientes;
 import br.com.section4.repository.ItensPedido;
@@ -60,6 +61,15 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Optional<Pedido> obterPedidoCompleto(Integer id) {
         return repository.findByIdFetchItens(id);
+    }
+
+    @Override
+    @Transactional
+    public void atualizarPedido(Integer id, StatusPedido statusPedido) {
+        repository.findById(id).map(pedido -> {
+            pedido.setStatus(statusPedido);
+            return repository.save(pedido);
+        }).orElseThrow(() -> new PedidoNaoEncontradoException());
     }
 
     private List<ItemPedido> converterItems(Pedido pedido, List<ItemPedidoDTO> items) {
