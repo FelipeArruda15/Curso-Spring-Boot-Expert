@@ -11,6 +11,10 @@ public class ApiErrors {
         this.errors = Arrays.asList(mensagemErro);
     }
 
+    public ApiErrors(List<String> errors) {
+        this.errors = errors;
+    }
+
     public List<String> getErrors() {
         return errors;
     }
