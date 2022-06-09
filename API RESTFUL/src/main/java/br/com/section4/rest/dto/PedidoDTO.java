@@ -1,6 +1,7 @@
 package br.com.section4.rest.dto;
 
-import javax.validation.constraints.NotEmpty;
+import br.com.section4.validation.NotEmptyList;
+
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
@@ -11,6 +12,7 @@ public class PedidoDTO {
     private Integer cliente;
     @NotNull(message = "Campo Total do pedido é obrigatório.")
     private BigDecimal total;
+    @NotEmptyList(message = "Pedido não pode ser realizado sem itens.")
     private List<ItemPedidoDTO> items;
 
     public Integer getCliente() {
