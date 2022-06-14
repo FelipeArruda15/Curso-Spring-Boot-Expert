@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-                auth.inMemoryAuthentication()
+        auth.inMemoryAuthentication()
                 .passwordEncoder(passwordEncoder())
                 .withUser("Felipe")
                 .password(passwordEncoder().encode("123"))
@@ -27,6 +27,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
+            http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/apí/clientes/**")
+                .authenticated()
+                .and()
+                .formLogin();
     }
 }
