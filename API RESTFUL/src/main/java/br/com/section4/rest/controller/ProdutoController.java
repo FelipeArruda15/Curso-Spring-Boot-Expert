@@ -1,6 +1,6 @@
 package br.com.section4.rest.controller;
 
-import br.com.section4.exception.entity.Produto;
+import br.com.section4.domain.enums.entity.Produto;
 import br.com.section4.repository.Produtos;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;

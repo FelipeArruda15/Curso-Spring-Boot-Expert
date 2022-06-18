@@ -1,6 +1,6 @@
 package br.com.section4.service;
 
-import br.com.section4.exception.entity.Pedido;
+import br.com.section4.domain.enums.entity.Pedido;
 import br.com.section4.domain.enums.StatusPedido;
 import br.com.section4.rest.dto.PedidoDTO;
 

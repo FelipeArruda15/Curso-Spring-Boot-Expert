@@ -1,4 +1,4 @@
-package br.com.section4.exception.entity;
+package br.com.section4.domain.enums.entity;
 
 import javax.persistence.*;
 

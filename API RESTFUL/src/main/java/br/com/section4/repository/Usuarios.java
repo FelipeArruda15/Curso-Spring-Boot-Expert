@@ -1,6 +1,6 @@
 package br.com.section4.repository;
 
-import br.com.section4.exception.entity.Usuario;
+import br.com.section4.domain.enums.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

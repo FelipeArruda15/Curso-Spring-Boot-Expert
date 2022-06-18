@@ -1,6 +1,6 @@
 package br.com.section4.rest.controller;
 
-import br.com.section4.exception.entity.Usuario;
+import br.com.section4.domain.enums.entity.Usuario;
 import br.com.section4.service.impl.UsuarioServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
