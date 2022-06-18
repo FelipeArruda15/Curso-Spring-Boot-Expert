@@ -1,6 +1,6 @@
 package br.com.section4.rest.controller;
 
-import br.com.section4.domain.entity.Cliente;
+import br.com.section4.exception.entity.Cliente;
 import br.com.section4.repository.Clientes;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;

@@ -1,4 +1,4 @@
-package br.com.section4.domain.entity;
+package br.com.section4.exception.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.br.CPF;

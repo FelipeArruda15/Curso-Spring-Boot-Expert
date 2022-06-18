@@ -1,7 +1,7 @@
 package br.com.section4.rest.controller;
 
-import br.com.section4.domain.entity.ItemPedido;
-import br.com.section4.domain.entity.Pedido;
+import br.com.section4.exception.entity.ItemPedido;
+import br.com.section4.exception.entity.Pedido;
 import br.com.section4.domain.enums.StatusPedido;
 import br.com.section4.rest.dto.AtualizacaoStatusPedidoDTO;
 import br.com.section4.rest.dto.InformacaoItemPedidoDTO;

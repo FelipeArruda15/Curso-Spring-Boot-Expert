@@ -1,4 +1,4 @@
-package br.com.section4.domain.entity;
+package br.com.section4.exception.entity;
 
 import br.com.section4.domain.enums.StatusPedido;
 
