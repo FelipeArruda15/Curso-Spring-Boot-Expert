@@ -1,7 +1,7 @@
 package br.com.section4.repository;
 
-import br.com.section4.domain.enums.entity.Cliente;
-import br.com.section4.domain.enums.entity.Pedido;
+import br.com.section4.domain.entity.Cliente;
+import br.com.section4.domain.entity.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,6 +1,6 @@
 package br.com.section4.service.impl;
 
-import br.com.section4.domain.enums.entity.Usuario;
+import br.com.section4.domain.entity.Usuario;
 import br.com.section4.repository.Usuarios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;

@@ -1,4 +1,4 @@
-package br.com.section4.domain.enums.entity;
+package br.com.section4.domain.entity;
 
 import br.com.section4.domain.enums.StatusPedido;
 

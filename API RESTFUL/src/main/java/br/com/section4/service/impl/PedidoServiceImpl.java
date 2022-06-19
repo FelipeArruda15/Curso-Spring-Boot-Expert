@@ -1,9 +1,10 @@
 package br.com.section4.service.impl;
 
-import br.com.section4.domain.enums.entity.Cliente;
-import br.com.section4.domain.enums.entity.ItemPedido;
-import br.com.section4.domain.enums.entity.Pedido;
-import br.com.section4.domain.enums.entity.Produto;
+
+import br.com.section4.domain.entity.Cliente;
+import br.com.section4.domain.entity.ItemPedido;
+import br.com.section4.domain.entity.Pedido;
+import br.com.section4.domain.entity.Produto;
 import br.com.section4.domain.enums.StatusPedido;
 import br.com.section4.exception.PedidoNaoEncontradoException;
 import br.com.section4.exception.RegraNegocioException;

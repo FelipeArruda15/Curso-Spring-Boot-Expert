@@ -1,6 +1,7 @@
-package br.com.section4.domain.enums.entity;
+package br.com.section4.domain.entity;
 
 import javax.persistence.*;
+
 
 @Entity
 @Table(name = "item_pedido")

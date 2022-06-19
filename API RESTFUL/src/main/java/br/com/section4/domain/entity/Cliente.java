@@ -1,4 +1,4 @@
-package br.com.section4.domain.enums.entity;
+package br.com.section4.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.br.CPF;
