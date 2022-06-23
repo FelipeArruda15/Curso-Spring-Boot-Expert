@@ -1,5 +1,6 @@
-package br.com.section4;
+package br.com.section4.security.jwt;
 
+import br.com.section4.Section4Application;
 import br.com.section4.domain.entity.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
