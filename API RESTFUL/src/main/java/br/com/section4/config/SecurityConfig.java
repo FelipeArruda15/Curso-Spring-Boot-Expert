@@ -1,5 +1,7 @@
 package br.com.section4.config;
 
+import br.com.section4.security.jwt.JwtAuthFilter;
+import br.com.section4.security.jwt.JwtService;
 import br.com.section4.service.impl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -8,23 +10,34 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UsuarioServiceImpl usuarioService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JwtService jwtService;
+
+    @Bean
+    private OncePerRequestFilter jwtFilter(){
+        return new JwtAuthFilter(jwtService, usuarioService);
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(userDetailsService)
+                .userDetailsService(usuarioService)
                 .passwordEncoder(passwordEncoder);
     }
 
@@ -43,6 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                    .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
