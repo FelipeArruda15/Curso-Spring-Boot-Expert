@@ -1,6 +1,7 @@
 package br.com.section4.service.impl;
 
 import br.com.section4.domain.entity.Usuario;
+import br.com.section4.exception.SenhaInvalidaException;
 import br.com.section4.repository.Usuarios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -42,5 +43,15 @@ public class UsuarioServiceImpl implements UserDetailsService {
         String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
         usuario.setSenha(senhaCriptografada);
         return usuariosRepository.save(usuario);
+    }
+
+    public UserDetails autenticar(Usuario usuario){
+        UserDetails user = loadUserByUsername(usuario.getUsername());
+        boolean senhaCorreta =  passwordEncoder.matches(usuario.getSenha(), user.getPassword());
+
+        if(senhaCorreta){
+            return user;
+        }
+        throw new SenhaInvalidaException();
     }
 }
