@@ -11,9 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -22,15 +20,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UsuarioServiceImpl usuarioService;
+    @Autowired
+    private JwtService jwtService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    private JwtService jwtService;
-
     @Bean
-    private OncePerRequestFilter jwtFilter(){
+    public OncePerRequestFilter jwtFilter() {
         return new JwtAuthFilter(jwtService, usuarioService);
     }
 
@@ -46,19 +43,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/apí/clientes/**")
-                    .hasAnyRole("USER", "ADMIN")
-                .antMatchers("/api/pedidos/**")
-                    .hasAnyRole("USER", "ADMIN")
-                .antMatchers("/api/produtos/**")
-                    .hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/usuarios/**")
-                    .permitAll()
-                .anyRequest().authenticated()
-                .and()
-                    .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                    .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+                        .antMatchers("/api/clientes/**")
+                            .hasAnyRole("USER", "ADMIN")
+                        .antMatchers("/api/pedidos/**")
+                            .hasAnyRole("USER", "ADMIN")
+                        .antMatchers("/api/produtos/**")
+                            .hasRole("ADMIN")
+                        .antMatchers(HttpMethod.POST, "/api/usuarios/**")
+                            .permitAll()
+                        .anyRequest().authenticated()
+                    .and()
+                        .sessionManagement()
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
+                        .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

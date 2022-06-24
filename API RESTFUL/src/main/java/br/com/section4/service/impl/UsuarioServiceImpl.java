@@ -17,18 +17,36 @@ import javax.transaction.Transactional;
 public class UsuarioServiceImpl implements UserDetailsService {
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder encoder;
 
     @Autowired
-    private Usuarios usuariosRepository;
+    private Usuarios repository;
+
+    @Transactional
+    public Usuario salvar(Usuario usuario){
+        String senhaCriptografada = encoder.encode(usuario.getSenha());
+        usuario.setSenha(senhaCriptografada);
+        return repository.save(usuario);
+    }
+
+    public UserDetails autenticar( Usuario usuario ){
+        UserDetails user = loadUserByUsername(usuario.getUsername());
+        boolean senhasBatem = encoder.matches( usuario.getSenha(), user.getPassword() );
+
+        if(senhasBatem){
+            return user;
+        }
+
+        throw new SenhaInvalidaException();
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = usuariosRepository.findByUsername(username)
-                            .orElseThrow(()-> new UsernameNotFoundException("Usuário não encontrado."));
+        Usuario usuario = repository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado na base de dados."));
 
-        String [] roles = usuario.isAdmin() ?
-                    new String[]{"ADMIN", "USER"}: new String[]{"USER"};
+        String[] roles = usuario.isAdmin() ?
+                new String[]{"ADMIN", "USER"} : new String[]{"USER"};
 
         return User
                 .builder()
@@ -38,20 +56,5 @@ public class UsuarioServiceImpl implements UserDetailsService {
                 .build();
     }
 
-    @Transactional
-    public Usuario salvar(Usuario usuario){
-        String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
-        usuario.setSenha(senhaCriptografada);
-        return usuariosRepository.save(usuario);
-    }
-
-    public UserDetails autenticar(Usuario usuario){
-        UserDetails user = loadUserByUsername(usuario.getUsername());
-        boolean senhaCorreta =  passwordEncoder.matches(usuario.getSenha(), user.getPassword());
-
-        if(senhaCorreta){
-            return user;
-        }
-        throw new SenhaInvalidaException();
-    }
 }
+

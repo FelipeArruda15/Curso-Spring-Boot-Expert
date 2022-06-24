@@ -21,10 +21,11 @@ public class JwtService {
 
     @Value("${security.jwt.expiracao}")
     private String expiracao;
+
     @Value("${security.jwt.chave-assinatura}")
     private String chaveAssinatura;
 
-    public String gerarToken(Usuario usuario){
+    public String gerarToken(Usuario usuario) {
         long expString = Long.valueOf(expiracao);
         LocalDateTime dataHoraExpiracao = LocalDateTime.now().plusMinutes(expString);
         Instant instant = dataHoraExpiracao.atZone(ZoneId.systemDefault()).toInstant();
@@ -46,34 +47,20 @@ public class JwtService {
                 .getBody();
     }
 
-    public boolean tokenValido(String token){
-        try{
+    public boolean tokenValido(String token) {
+        try {
             Claims claims = obterClaims(token);
             Date dataExpiracao = claims.getExpiration();
-            LocalDateTime data = dataExpiracao.toInstant()
-                                        .atZone(ZoneId.systemDefault()).toLocalDateTime();
-            return LocalDateTime.now().isBefore(data);
-        }catch (Exception e){
-            return  false;
+            LocalDateTime data =
+                    dataExpiracao.toInstant()
+                            .atZone(ZoneId.systemDefault()).toLocalDateTime();
+            return !LocalDateTime.now().isAfter(data);
+        } catch (Exception e) {
+            return false;
         }
     }
 
-    public String obterLoginUsuario(String token) throws ExpiredJwtException{
-        return obterClaims(token).getSubject();
+    public String obterLoginUsuario(String token) throws ExpiredJwtException {
+        return (String) obterClaims(token).getSubject();
     }
-
-    public static void main(String[] args){
-        ConfigurableApplicationContext context = SpringApplication.run(Section4Application.class);
-        JwtService jwt = context.getBean(JwtService.class);
-        Usuario usuario = new Usuario();
-        usuario.setUsername("Felipe");
-        String token = jwt.gerarToken(usuario);
-        System.out.println(token);
-
-        boolean isTokenValido =  jwt.tokenValido(token);
-        System.out.println("O token está válido? " + isTokenValido);
-
-        System.out.println(jwt.obterLoginUsuario(token));
-    }
-
 }

@@ -9,6 +9,7 @@ import br.com.section4.service.impl.UsuarioServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,26 +24,30 @@ public class UsuarioController {
 
     private JwtService jwtService;
 
-    public UsuarioController(UsuarioServiceImpl usuarioService, JwtService jwtService) {
+    private BCryptPasswordEncoder passwordEncoder;
+
+    public UsuarioController(UsuarioServiceImpl usuarioService, JwtService jwtService, BCryptPasswordEncoder passwordEncoder) {
         this.usuarioService = usuarioService;
         this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario salvar(@RequestBody @Valid Usuario usuario) {
+    public Usuario salvar( @RequestBody @Valid Usuario usuario ){
         return usuarioService.salvar(usuario);
     }
+
     @PostMapping("/auth")
     public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais){
-        try {
+        try{
             Usuario usuario = new Usuario();
             usuario.setUsername(credenciais.getLogin());
             usuario.setSenha(credenciais.getSenha());
             UserDetails usuarioAutenticado = usuarioService.autenticar(usuario);
             String token = jwtService.gerarToken(usuario);
             return new TokenDTO(usuario.getUsername(), token);
-        }catch (UsernameNotFoundException  | SenhaInvalidaException e){
+        } catch (UsernameNotFoundException | SenhaInvalidaException e ){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
